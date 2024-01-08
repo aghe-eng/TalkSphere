@@ -3,11 +3,11 @@
 one:
   title: MyString
   content: MyText
-  user_id: one
-  category_id: one
+  user: one
+  category: one
 
 two:
   title: MyString
   content: MyText
-  user_id: two
-  category_id: two
+  user: two
+  category: two
