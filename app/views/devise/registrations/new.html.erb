@@ -5,9 +5,8 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <%= f.input :email, label: "Email", autofocus: true, required: true, autocomplete: "Email"%>
-
+  <%= f.input :username, label: "Username", required: true, autocomplete: "Username"%>
   <%= f.input :password, label: "Password", required: true, hint: (@minimum_password_length ? "Minimum #{@minimum_password_length} characters" : 6), autocomplete: "off" %>
-
   <%= f.input :password_confirmation, label: "Confirm Password", required: true, autocomplete: "off" %>
 
   <div class="actions">
