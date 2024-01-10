@@ -10,6 +10,7 @@
     <%= post.content %>
   </p>
     <h4><%= pluralize(post.views, "view")%></h4>
+     <h4>Post_by: <%= (post.user.username.capitalize)%></h4>
 
  </div>
 </div>
