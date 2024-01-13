@@ -3,7 +3,9 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @category = Category.find(params[:category_id])
+    @posts = @category.posts
+
   end
 
   # GET /posts/1 or /posts/1.json
@@ -11,12 +13,16 @@ class PostsController < ApplicationController
     # views = @post.views + 1
     # @post.views = views
     # @post.save
+    @category = @post.category
+    @comments = @post.comments
     @post.update(views: @post.views + 1)
   end
 
   # GET /posts/new
   def new
-    @post = Post.new
+    @category = Category.find(params[:category_id])
+    @post = @category.posts.build
+
   end
 
   # GET /posts/1/edit

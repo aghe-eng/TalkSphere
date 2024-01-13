@@ -1,18 +1,17 @@
 
 <div class="container">
 <p style="color: green"><%= notice %></p>
- <h1>Posts</h1>
 
  <div class="m-2", id="posts">
   <% @posts.each do |post| %>
     <%= render post %>
     <p>
-      <%= link_to "View post", post%>
+      <%= link_to "View post", category_post_path(@category, post)%>
     </p>
   <% end %>
 </div>
 <div class="m-2">
-  <%= link_to "New post", new_post_path, class: "btn btn-secondary" %>
+  <%= link_to "New post", new_category_post_path, class: "btn btn-secondary" %>
 </div>
 <div class="m-2">
    <%= link_to "Back to Home page", root_path, class: "btn btn-primary"%>

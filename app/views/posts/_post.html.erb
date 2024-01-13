@@ -1,16 +1,26 @@
 <div class="container">
  <div id="<%= dom_id post %>">
   <p>
-    <strong>Title:</strong>
-    <%= post.title %>
+   <h1><%= @category.name%></h1>
   </p>
-
+   <p><strong>Title:</strong> <%= post.title %></p>
   <p>
     <strong>Content:</strong>
     <%= post.content %>
   </p>
-    <h4><%= pluralize(post.views, "view")%></h4>
-     <h4>Post_by: <%= (post.user.username.capitalize)%></h4>
-
+  <p>
+     <h3>Comments</h3>
+    <ul>
+      <% if @comments.present? %>
+        <% @comments.each do |comment| %>
+        <li><%= comment.content %></li>
+     <% end %>
+    <% else %>
+    <p>No comments yet</p>
+    <% end %>
+  </p>
+ </ul>
+  <h4><%= pluralize(post.views, "view")%></h4>
+  <h4>Post_by: <%= (post.user.username.capitalize)%></h4>
  </div>
 </div>

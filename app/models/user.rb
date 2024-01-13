@@ -1,5 +1,9 @@
 class User < ApplicationRecord
-  has_many :posts
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  
+  validates :email, presence: true
+  validates :password, presence: true
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable

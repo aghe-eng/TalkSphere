@@ -1,6 +1,12 @@
 <h1>Welcome to TalkSphere😊</h1>
 <p>Here you can learn all about Us</p>
 
-<%= link_to "Forum", posts_path, class: "btn btn-primary"%>
-
+<ul>
+<% @categories.each do |category| %>
+ <div>
+  <ul> <%= link_to category.name, category_posts_path(category.id)%>
+</ul>
+ </div>
+<% end %>
+</ul>
 <%= link_to "About Us", about_path, class: "btn btn-secondary" %>
