@@ -2,12 +2,12 @@
 <div class="container">
  <h2>Editing post</h2>
 
- <%= render "form", post: @post %>
+ <%= render "form", category: @category, post: @post %>
 
 <br>
 
  <div>
-   <%= link_to "Show this post", @post %> |
-   <%= link_to "Back to posts", posts_path %>
+   <%= link_to "Show this post", @category_post_path %> |
+   <%= link_to "Back to posts", category_posts_path %>
  </div>
 </div>

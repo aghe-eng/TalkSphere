@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
   resources :categories do
     resources :posts do
+      member do
+        post 'likes'
+        delete 'unlike'
+      end
       resources :comments
-  end
+       member do
+        post 'like'
+        delete 'unlike'
+       end
+    end
 end
   get 'about', to: 'pages#about'
   devise_for :users

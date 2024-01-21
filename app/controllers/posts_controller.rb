@@ -1,11 +1,10 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy like unlike]
+  before_action :set_category, only: %i[ index new ]
 
   # GET /posts or /posts.json
   def index
-    @category = Category.find(params[:category_id])
     @posts = @category.posts
-
   end
 
   # GET /posts/1 or /posts/1.json
@@ -20,13 +19,17 @@ class PostsController < ApplicationController
 
   # GET /posts/new
   def new
-    @category = Category.find(params[:category_id])
     @post = @category.posts.build
 
   end
 
   # GET /posts/1/edit
   def edit
+    def edit
+      @category = Category.find(params[:category_id])
+      @post = @category.posts.find(params[:id])
+    end
+
   end
 
   # POST /posts or /posts.json
@@ -66,11 +69,23 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+ def like
+  @post.likes.create(user_id: current_user.id)
+  respond_to @category_post, notice: "Post liked!"
+ end
 
+ def unlike
+  @post.likes.where(user_id: current_user.id).destroy_all
+  respond_to @category_post, notice: "Post unliked!"
+ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
       @post = Post.find(params[:id])
+    end
+
+    def set_category
+      @category = Category.find(params[:category_id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -1,26 +1,35 @@
 <div class="container">
- <div id="<%= dom_id post %>">
-  <p>
-   <h1><%= @category.name%></h1>
-  </p>
-   <p><strong>Title:</strong> <%= post.title %></p>
-  <p>
-    <strong>Content:</strong>
-    <%= post.content %>
-  </p>
-  <p>
-     <h3>Comments</h3>
-    <ul>
-      <% if @comments.present? %>
-        <% @comments.each do |comment| %>
-        <li><%= comment.content %></li>
-     <% end %>
-    <% else %>
-    <p>No comments yet</p>
+  <div id="<%= dom_id post %>">
+    <p>
+      <h1><%= @category.name %></h1>
+    </p>
+    <p><strong>Title:</strong> <%= post.title %></p>
+    <p>
+      <strong>Content:</strong>
+      <%= post.content %>
+    </p>
+    <p>
+      <h3>Comments</h3>
+      <ul>
+        <% if @comments.present? %>
+          <% @comments.each do |comment| %>
+            <li><%= comment.content %></li>
+          <% end %>
+        <% else %>
+          <p>No comments yet</p>
+        <% end %>
+      </ul>
+    </p>
+
+    <h4><%= pluralize(post.views, "view") %></h4>
+   <% if user_signed_in? %>
+      <% if current_user.likes?(@post) %>
+        <%= button_to 'Unlike', unlike_category_post_path(@category, post), method: :delete %>
+      <% else %>
+        <%= button_to 'Like', like_category_post_path(@category, post), method: :post %>
+      <% end %>
     <% end %>
-  </p>
- </ul>
-  <h4><%= pluralize(post.views, "view")%></h4>
-  <h4>Post_by: <%= (post.user.username.capitalize)%></h4>
- </div>
+
+    <h4>Post by: <%= post.user.username.capitalize %></h4>
+    <h4><%= post.likes.count %> Likes</h4>
 </div>
