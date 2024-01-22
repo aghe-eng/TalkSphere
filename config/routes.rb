@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
-  resources :categories do
-    resources :posts do
-      member do
-        post 'likes'
-        delete 'unlike'
+  Rails.application.routes.draw do
+    resources :categories do
+      resources :posts do
+        member do
+          post 'likes'
+          delete 'unlike'
+        end
+        resources :comments, only: [:create, :destroy]
       end
-      resources :comments
-       member do
-        post 'like'
-        delete 'unlike'
-       end
     end
-end
+
+  end
   get 'about', to: 'pages#about'
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

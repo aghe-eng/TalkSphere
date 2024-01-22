@@ -9,12 +9,13 @@
       <%= post.content %>
     </p>
     <p>
-      <h3>Comments</h3>
+      <h4>Comments</h4>
       <ul>
         <% if @comments.present? %>
-          <% @comments.each do |comment| %>
-            <li><%= comment.content %></li>
-          <% end %>
+         <% @post.comments.each do |comment| %>
+         <p><strong><%= comment.user.username %>:</strong><%= comment.content %></p>
+         <%= link_to "Delete comment", category_post_comments_path(@category, @post, comment), method: :delete, data: { confirm: "Are you sure?" } %>
+       <% end %>
         <% else %>
           <p>No comments yet</p>
         <% end %>
@@ -22,13 +23,7 @@
     </p>
 
     <h4><%= pluralize(post.views, "view") %></h4>
-   <% if user_signed_in? %>
-      <% if current_user.likes?(@post) %>
-        <%= button_to 'Unlike', unlike_category_post_path(@category, post), method: :delete %>
-      <% else %>
-        <%= button_to 'Like', like_category_post_path(@category, post), method: :post %>
-      <% end %>
-    <% end %>
+
 
     <h4>Post by: <%= post.user.username.capitalize %></h4>
     <h4><%= post.likes.count %> Likes</h4>
