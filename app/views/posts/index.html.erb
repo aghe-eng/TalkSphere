@@ -4,7 +4,7 @@
 
  <div class="m-2", id="posts">
   <% @posts.each do |post| %>
-    <%= render post %>
+    <%= render partial: "posts/post", locals: {post: post, category: @category} %>
     <p>
       <%= link_to "View post", category_post_path(@category, post)%>
     </p>

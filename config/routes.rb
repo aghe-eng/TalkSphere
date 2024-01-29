@@ -1,15 +1,15 @@
 Rails.application.routes.draw do
   get 'users/profile'
-    resources :categories do
-      resources :posts do
-        member do
-          post 'likes'
-          delete 'unlike'
-        end
-        resources :comments, only: [:create, :destroy]
-      end
-    end
   get '/u/:id', to: 'users#profile', as: 'user'
+  resources :categories do
+    resources :posts do
+      member do
+        post 'likes'
+        delete 'unlike'
+      end
+      resources :comments
+    end
+  end
   get 'about', to: 'pages#about'
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

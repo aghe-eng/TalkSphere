@@ -15,6 +15,7 @@ class PostsController < ApplicationController
     # @post.save
     @category = @post.category
     @comments = @post.comments
+    @comment = @post.comments.build
     @post.update(views: @post.views + 1)
   end
 

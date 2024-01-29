@@ -1,26 +1,25 @@
 <div class="container">
   <div id="<%= dom_id post %>">
     <p>
-      <h4><%= @category.name %></h4>
+      <h4><%= category.name %></h4>
     </p>
-    <p><strong>Title:</strong> <%= post.title %></p>
-    <p>
-      <strong>Content:</strong>
-      <%= post.content %>
-    </p>
-    <p>
+
+    <% if post.comments.present? %>
       <h5>Comments</h5>
-      <ul>
-        <% if @comments.present? %>
-         <% @post.comments.each do |comment| %>
-         <p><strong><%= comment.user.username %>:</strong><%= comment.content %></p>
-         <%= link_to "Delete comment", category_post_comments_path(@category, @post, comment), method: :delete, data: { confirm: "Are you sure?" } %>
-       <% end %>
-        <% else %>
-          <p>No comments yet</p>
+      <% post.comments.each do |comment| %>
+        <p><strong><%= comment.user.username if comment.user %>:</strong><%= comment.content || "No comments" %></p>
+
+        <% if current_user == comment.user && comment.id.present? %>
+          <%= link_to "Delete comment", category_post_comment_path(category, post, comment), method: :delete, data: { confirm: "Are you sure?" } %>
         <% end %>
-      </ul>
-    </p>
+      <% end %>
+    <% else %>
+      <p>No comments yet</p>
+    <% end %>
+  </div>
+</div>
+
+  </div>
 
     <h4><%= pluralize(post.views, "view") %></h4>
 

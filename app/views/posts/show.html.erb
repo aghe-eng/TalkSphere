@@ -1,15 +1,14 @@
 <div class="container">
 <div>
-<%= render @post %>
-    <%= simple_form_for([@post, Comment.new], url: category_post_comments_path(@category, @post)) do |form| %>
-      <%= form.input :content, placeholder: "Write your comment" %>
-      <%= form.button :submit, "Add Comment", class: "btn btn-primary" %>
-    <% end %>
-
+<%= render partial: "posts/post", locals: { post: @post, category: @category } %>
 <span>
   <%= link_to "Edit post", edit_category_post_path(@category, @post) %>
   <%= link_to "Back to posts", category_posts_path%>
-  <%= link_to "Delete post", category_post_path, method: :delete%>
+  <p><%= link_to "Delete post", category_post_path, method: :delete, class: "btn btn-light"%></p>
  </span>
 </div>
+</div>
+
+<div class="container">
+  <%= render "comments/form", post: @post %>
 </div>
