@@ -1,7 +1,7 @@
 <div class="container">
   <div id="<%= dom_id post %>">
     <p>
-      <h1><%= @category.name %></h1>
+      <h4><%= @category.name %></h4>
     </p>
     <p><strong>Title:</strong> <%= post.title %></p>
     <p>
@@ -9,7 +9,7 @@
       <%= post.content %>
     </p>
     <p>
-      <h4>Comments</h4>
+      <h5>Comments</h5>
       <ul>
         <% if @comments.present? %>
          <% @post.comments.each do |comment| %>
@@ -25,6 +25,6 @@
     <h4><%= pluralize(post.views, "view") %></h4>
 
 
-    <h4>Post by: <%= post.user.username.capitalize %></h4>
+    <h4>Post by: <%= link_to post.user.username.capitalize, user_path(post.user) %></h4>
     <h4><%= post.likes.count %> Likes</h4>
 </div>

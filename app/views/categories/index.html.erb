@@ -3,12 +3,10 @@
 <h1>Categories</h1>
 
 <div id="categories">
-  <ul>
     <% @categories.each do |category| %>
-     <li><%= render category %>
-    </li>
+    <p><%= render category %>
    <% end %>
-  </ul>
+  </p>
 </div>
 
 <%= link_to "New category", new_category_path %>

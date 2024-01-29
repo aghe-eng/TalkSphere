@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[ show edit update destroy like unlike]
+  before_action :authenticate_user!, except: %i[ show index]
   before_action :set_category
 
   # GET /posts or /posts.json
   def index
-    @posts = @category.posts
+    @posts = @category.posts.order(created_at: :desc)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -23,21 +24,18 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/1/edit
-  def edit
     def edit
-      @category = Category.find(params[:category_id])
       @post = @category.posts.find(params[:id])
     end
-
-  end
 
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
+        format.html { redirect_to category_post_url(@category, @post), notice: "Post was successfully created."}
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -95,7 +93,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content)
+      params.require(:post).permit(:title, :content, :category_id)
     end
 
     def comment_params
