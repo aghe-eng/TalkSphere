@@ -1,6 +1,6 @@
-<%= simple_form_for([@category, @post, @post.comments.build]) do |f| %>
-  <div class="form-group">
+
+  <%= simple_form_for([@category, @post, @post.comments.build]) do |f| %>
     <%= f.input :content, as: :rich_text_area, input_html: { class: "form-control" } %>
     <%= f.button :submit, "Add comment", class: "btn btn-primary mt-1" %>
-  </div>
-<% end %>
+  <% end %>
+
