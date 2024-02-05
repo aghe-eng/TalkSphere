@@ -14,8 +14,7 @@ class PostsController < ApplicationController
     # @post.views = views
     # @post.save
     @category = @post.category
-    @comments = @post.comments
-    @comment = @post.comments.build
+    @comments = @post.comments.order(created_at: :desc)
     @post.update(views: @post.views + 1)
   end
 
@@ -26,7 +25,9 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
     def edit
-      @post = @category.posts.find(params[:id])
+      unless current_user == @post.user
+        redirect_to category_post_path(@category, @post), notice: "You are not authorized to edit this post."
+      end
     end
 
   # POST /posts or /posts.json
@@ -49,7 +50,7 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to category_post_url(@post), notice: "Post was successfully updated." }
+        format.html { redirect_to category_post_path(@category, @post), notice: "Post was successfully updated." }
         format.json { render :show, status: :ok, location: @post }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -61,7 +62,10 @@ class PostsController < ApplicationController
   # DELETE /posts/1 or /posts/1.json
   def destroy
     @post.destroy!
-
+    @comment = @post.comments.find(params[:comment_id])
+      unless current_user == @comment.user
+        redirect_to category_post_path(@category, @post), notice: "You are not authorized to delete this comment."
+      end
     respond_to do |format|
       format.html { redirect_to category_posts_url, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
@@ -79,13 +83,10 @@ class PostsController < ApplicationController
  end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    def set_post_comment
-      @post = Post.find(params[:post_id])
+    def set_post
+        @post = Post.find_by(id: params[:id])
+        redirect_to(category_posts_path) unless @post
     end
 
     def set_category

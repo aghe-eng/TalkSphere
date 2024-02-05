@@ -2,18 +2,18 @@
 <div class="container">
 <p style="color: green"><%= notice %></p>
 
- <div class="m-2", id="posts">
+ <div class="m-3", id="posts">
   <% @posts.each do |post| %>
-    <%= render partial: "posts/post", locals: {post: post, category: @category} %>
+    <%= render partial: "posts/post", locals: {post: post, category: @categorposty} %>
     <p>
       <%= link_to "View post", category_post_path(@category, post)%>
     </p>
   <% end %>
-</div>
-<div class="m-2">
+   <div class="m-2">
   <%= link_to "New post", new_category_post_path, class: "text-dark" %>
-</div>
-<div class="m-2">
+ </div>
+ <div class="m-2">
    <%= link_to "Back to Home page", root_path, class: "btn btn-primary"%>
  </div>
-</div>
+ </div>
+ </div>

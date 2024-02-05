@@ -1,0 +1,13 @@
+
+<div class="comment-<%= comment.id %> container" style="border: 1px solid black; padding: 1em; margin: 1em;">
+ <span> <%= comment.user.username.capitalize %> :
+  Posted <small><%= comment.created_at.strftime("%B %d, %Y") %></small></span>
+ <% if current_user == comment.user %>
+ <div class="button-group float-end">
+   <%= button_to "Delete Comment", [@category, post, comment], class: "btn btn-danger", method: :delete %>
+ </div>
+ <% end%>
+ <hr />
+   <%= strip_tags(comment.content) %> <br>
+   <%= link_to 'Edit Comment', edit_category_post_comment_path(@category, @post, comment) %>
+ </div>
