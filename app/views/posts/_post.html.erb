@@ -1,25 +1,13 @@
 
-<div class="container">
+<div class="container" id="post-<%= post.id %>">
     <p>
-      <h4><%= category.name %></h4>
+      <h4><%= post.category.name %></h4>
     </p>
     <p>
       <h4><%= post.title %></h4>
     </p>
     <p>
-      <h4><%= post.content %></h4>
-    <% if post.comments.present? %>
-      <h5>Comments</h5>
-      <% post.comments.each do |comment| %>
-        <p><strong><%= comment.user.username if comment.user %> </strong><%= strip_tags(comment.content) %></p>
-        <% if current_user == comment.user && comment.id.present? %>
-          <%= link_to "Delete comment", category_post_comment_path(category, post, comment), method: :delete, data: { confirm: "Are you sure?" } %>
-          <%= link_to "edit comment",  edit_category_post_comment_path(category, post, comment) %>
-      <% end %>
-      <% end %>
-        <% elsif %>
-          <p>No comment</p>
-      <% end %>
+      <%= post.content %>
     <h4><%= pluralize(post.views, "view") %></h4>
     <h4>Post by: <%= link_to post.user.username.capitalize, user_path(post.user) %></h4>
     <h4><%= post.likes.count %> Likes</h4>

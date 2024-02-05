@@ -2,13 +2,16 @@
 <div>
 <%= render partial: "posts/post", locals: { post: @post, category: @category } %>
 <span>
-  <%= link_to "Edit post", edit_category_post_path(@category, @post) %>
-  <%= link_to "Back to posts", category_posts_path%>
-  <p><%= link_to "Delete post", category_post_path, method: :delete, class: "btn btn-light"%></p>
+  <%= link_to "Edit post", edit_category_post_path(@category, @post) %>|
+  <%= link_to "Back to posts", category_posts_path%>|
+  <%= button_to "Delete post", [@category, @post], method: :delete%>
  </span>
 </div>
 </div>
 
 <div class="container">
   <%= render "comments/form", post: @post %>
+  <% @comments.each do |comment| %>
+    <%= render "comments/comment", post: @post, comment: comment %>
+  <% end %>
 </div>
