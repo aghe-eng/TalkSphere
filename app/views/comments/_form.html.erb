@@ -1,5 +1,5 @@
 
-  <%= simple_form_for([@category, @post, @post.comments.build]) do |f| %>
+  <%= simple_form_for([@category, @post, comment]) do |f| %>
     <%= f.input :content, label: "Enter comment", as: :rich_text_area, input_html: { class: "form-control" } %>
     <%= f.button :submit, "Add comment", class: "btn btn-primary mt-1" %>
   <% end %>

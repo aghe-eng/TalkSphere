@@ -1,20 +1,16 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_post
-  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :set_comment, only: [:update, :destroy]
 
-
-  def edit
-    unless current_user == @comment.user
-      redirect_to category_post_path(@category, @post), notice: "You are not authorized to edit this comment."
-    end
-  end
 
   def update
-    if @comment.update(comment_params)
-      redirect_to category_post_path(@category, @post)
-    else
-      render 'edit'
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.html { redirect_to category_post_url(@category, @post), notice: "Comment was successfully updated."}
+      else
+        format.html { redirect_to category_post_url(@category, @post), alert: "Comment could not been updated."}
+      end
     end
   end
 

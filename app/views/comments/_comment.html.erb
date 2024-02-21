@@ -1,13 +1,29 @@
 
 <div class="comment-<%= comment.id %> container" style="border: 1px solid black; padding: 1em; margin: 1em;">
- <span> <%= comment.user.username.capitalize %> :
-  Posted <small><%= comment.created_at.strftime("%B %d, %Y") %></small></span>
- <% if current_user == comment.user %>
- <div class="button-group float-end">
+ <%= comment.user.username.capitalize %> <br>
+ <% if comment.updated_at - comment.created_at > 1 %>
+ <span>Edited <%= time_ago_in_words(comment.updated_at) %> ago</span>
+<% else %>
+  <span>Posted <%= time_ago_in_words(comment.created_at) %> ago</span>
+  <% end %>
+  <% if current_user == comment.user %>
+ <div class="btn-group float-end">
+  <%= link_to "Edit", nil, remote: true,  class: "btn btn-warning",
+  data: {
+    controller: "comments",
+    action: "comments#toggleForm",
+    comments_form_params: "edit-form-#{comment.id}",
+    comments_body_params: "comment-body-#{comment.id}"
+  }%>
    <%= button_to "Delete Comment", [@category, post, comment], class: "btn btn-danger", method: :delete %>
  </div>
+ <div id="edit-form-<%= comment.id %>", class="d-none">
+ <%= render "comments/form", post: @post, comment: comment %>
+</div>
  <% end%>
  <hr />
-   <%= strip_tags(comment.content) %> <br>
-   <%= link_to 'Edit Comment', edit_category_post_comment_path(@category, @post, comment) %>
+ <div id="comment-body- <%= comment.id%>" %>
+   <%= strip_tags(comment.content) %>
  </div>
+ <br>
+</div>
