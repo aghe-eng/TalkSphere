@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = @post.comments.create(comment_params.merge(user: current_user))
+    @comment = @post.comments.new(comment_params.merge(user: current_user))
     if @comment.save
       flash[:notice] = "comment has been created"
       redirect_to category_post_path(@category, @post)
