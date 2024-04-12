@@ -37,6 +37,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
+        PostNotification.with(post: @post).deliver(current_user)
         format.html { redirect_to category_post_url(@category, @post), notice: "Post was successfully created."}
         format.json { render :show, status: :created, location: @post }
       else

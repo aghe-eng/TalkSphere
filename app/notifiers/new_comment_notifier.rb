@@ -4,7 +4,14 @@
 
 class NewCommentNotifier < ApplicationNotifier
   # Add your delivery methods
-  deliver_by :database
+  deliver_by :database, format: :to_database
+  def to_database
+    {
+      recipient: params[:recipient],
+      actor: params[:actor],
+      resource: params[:resource]
+    }
+  end
   #
   # deliver_by :email do |config|
   #   config.mailer = "UserMailer"

@@ -23,13 +23,20 @@ class CommentsController < ApplicationController
       flash[:alert] = "comment has not been created"
       redirect_to category_post_path(@category, @post)
     end
-  endtificat
-
-  def destroy
-    @comment.destroy
-    redirect_to category_post_path(@category, @post), notice: 'Comment was successfully deleted.'
   end
 
+  def destroy
+    if current_user == @comment.user
+      # Create a notification before the comment is destroyed
+      CommentDeletedNotifier.with(recipient: @post.user, actor: current_user, resource: @comment).deliver_later(@post.user)
+      @comment.destroy
+      flash[:notice] = 'Comment was successfully deleted.'
+    else
+      flash[:alert] = 'You are not authorized to delete this comment.'
+    end
+    redirect_to category_post_path(@category, @post)
+  end
+  
   private
 
   def set_comment
