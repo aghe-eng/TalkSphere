@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
       flash[:alert] = "comment has not been created"
       redirect_to category_post_path(@category, @post)
     end
-  end
+  endtificat
 
   def destroy
     @comment.destroy
